@@ -1,0 +1,23 @@
+<%- include('partials/header', { title, user }) %>
+<section class="grid stats-grid">
+  <article class="card"><h2>Clients</h2><p><%= stats.clients %></p></article>
+  <article class="card"><h2>Devis</h2><p><%= stats.quotes %></p></article>
+  <article class="card"><h2>Brouillons</h2><p><%= stats.drafts %></p></article>
+  <article class="card"><h2>Envoyés</h2><p><%= stats.sent %></p></article>
+</section>
+<section class="card">
+  <h2>Derniers devis</h2>
+  <ul>
+    <% latestQuotes.forEach((quote) => { %>
+    <li>
+      <a href="/quotes/<%= quote.id %>"><%= quote.quote_number %></a>
+      - <%= quote.company_name %> - <strong><%= quote.status %></strong>
+    </li>
+    <% }) %>
+  </ul>
+  <div class="actions">
+    <a class="button" href="/clients">Gérer les clients</a>
+    <a class="button" href="/quotes/new">Créer un devis</a>
+  </div>
+</section>
+<%- include('partials/footer') %>

@@ -1,0 +1,66 @@
+<%- include('../partials/header', { title, user }) %>
+<section class="card">
+  <h1><%= quote.quote_number %></h1>
+  <p><strong>Client:</strong> <%= client.company_name %></p>
+  <p><strong>Statut:</strong> <span class="badge <%= quote.status %>"><%= quote.status %></span></p>
+  <p><strong>Validité:</strong> du <%= quote.issue_date %> au <%= quote.valid_until %></p>
+
+  <h2>Lignes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Qté</th>
+        <th>PU HT</th>
+        <th>TVA</th>
+        <th>Total TTC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% lines.forEach((line) => { %>
+      <tr>
+        <td><%= line.description %></td>
+        <td><%= line.quantity %></td>
+        <td><%= line.unitPrice.toFixed(2) %> €</td>
+        <td><%= line.vatRate %> %</td>
+        <td><%= line.totalTtc.toFixed(2) %> €</td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <h2>Totaux</h2>
+  <ul>
+    <li>Remise: <%= totals.discountRate %>%</li>
+    <li>Acompte: <%= totals.depositRate %>%</li>
+    <li>Total HT: <%= totals.totalHt.toFixed(2) %> €</li>
+    <li>Total TVA: <%= totals.totalVat.toFixed(2) %> €</li>
+    <li>Total TTC: <%= totals.totalTtc.toFixed(2) %> €</li>
+    <li>Acompte à verser: <%= totals.depositAmount.toFixed(2) %> €</li>
+    <li>Reste à payer: <%= totals.remainingAmount.toFixed(2) %> €</li>
+  </ul>
+
+  <div class="actions">
+    <a class="button" href="/quotes/<%= quote.id %>/pdf">Télécharger PDF</a>
+    <form method="post" action="/quotes/<%= quote.id %>/share">
+      <button type="submit">Partager (simulation email)</button>
+    </form>
+    <form method="post" action="/quotes/<%= quote.id %>/status" class="inline-form">
+      <select name="status">
+        <option value="draft" <%= quote.status === 'draft' ? 'selected' : '' %>>Brouillon</option>
+        <option value="validated" <%= quote.status === 'validated' ? 'selected' : '' %>>Validé</option>
+        <option value="sent" <%= quote.status === 'sent' ? 'selected' : '' %>>Envoyé</option>
+      </select>
+      <button type="submit">Mettre à jour</button>
+    </form>
+  </div>
+</section>
+<section class="card">
+  <h2>Historique</h2>
+  <ul>
+    <% history.forEach((item) => { %>
+    <li><%= item.created_at %> - <%= item.action %> (<%= item.username || 'système' %>)</li>
+    <% }) %>
+  </ul>
+</section>
+<%- include('../partials/footer') %>

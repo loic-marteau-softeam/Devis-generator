@@ -1,0 +1,14 @@
+<%- include('partials/header', { title, user }) %>
+<section class="card auth-card">
+  <h1>Connexion</h1>
+  <p>Comptes de démonstration: admin/admin123 ou commercial/commercial123</p>
+  <% if (error) { %>
+  <p class="error"><%= error %></p>
+  <% } %>
+  <form action="/login" method="post" class="form-grid">
+    <label>Identifiant <input name="username" required /></label>
+    <label>Mot de passe <input type="password" name="password" required /></label>
+    <button type="submit">Se connecter</button>
+  </form>
+</section>
+<%- include('partials/footer') %>

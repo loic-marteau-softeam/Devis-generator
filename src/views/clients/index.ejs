@@ -1,0 +1,36 @@
+<%- include('../partials/header', { title, user }) %>
+<section class="card">
+  <h1>Clients</h1>
+  <form method="post" action="/clients" class="form-grid">
+    <label>Société * <input name="company_name" required /></label>
+    <label>Contact <input name="contact_name" /></label>
+    <label>Email <input type="email" name="email" /></label>
+    <label>Téléphone <input name="phone" /></label>
+    <label>Adresse <textarea name="address" rows="2"></textarea></label>
+    <button type="submit">Ajouter</button>
+  </form>
+</section>
+<section class="card">
+  <h2>Liste</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Société</th>
+        <th>Contact</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% clients.forEach((client) => { %>
+      <tr>
+        <td><%= client.company_name %></td>
+        <td><%= client.contact_name || '-' %></td>
+        <td><%= client.email || '-' %></td>
+        <td><%= client.phone || '-' %></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>
+<%- include('../partials/footer') %>
