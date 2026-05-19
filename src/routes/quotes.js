@@ -51,7 +51,7 @@ router.get('/quotes/new', requireRole('admin', 'commercial'), (req, res) => {
 });
 
 router.post('/quotes', requireRole('admin', 'commercial'), (req, res) => {
-  const { client_id, issue_date, valid_until, discount_rate, deposit_rate, notes } = req.body;
+  const { client_id, issue_date, valid_until, discount_rate, deposit_rate, notes, legal_mentions, payment_schedule } = req.body;
   const lines = normalizeLines(req.body);
 
   if (!client_id || lines.length === 0) {
@@ -76,8 +76,8 @@ router.post('/quotes', requireRole('admin', 'commercial'), (req, res) => {
     const quoteResult = db
       .prepare(
         `INSERT INTO quotes
-         (quote_number, client_id, status, issue_date, valid_until, discount_rate, deposit_rate, notes, created_by)
-         VALUES (?, ?, 'draft', ?, ?, ?, ?, ?, ?)`
+         (quote_number, client_id, status, issue_date, valid_until, discount_rate, deposit_rate, notes, legal_mentions, payment_schedule, created_by)
+         VALUES (?, ?, 'draft', ?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .run(
         quoteNumber,
@@ -87,6 +87,8 @@ router.post('/quotes', requireRole('admin', 'commercial'), (req, res) => {
         totals.discountRate,
         totals.depositRate,
         notes || null,
+        legal_mentions || null,
+        payment_schedule || null,
         req.session.user.id
       );
 

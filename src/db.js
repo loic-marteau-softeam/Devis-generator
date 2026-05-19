@@ -66,6 +66,17 @@ function migrate() {
       FOREIGN KEY(performed_by) REFERENCES users(id) ON DELETE SET NULL
     );
   `);
+
+  const quoteColumns = db.prepare(`PRAGMA table_info(quotes)`).all();
+  const quoteColumnNames = new Set(quoteColumns.map((column) => column.name));
+
+  if (!quoteColumnNames.has('legal_mentions')) {
+    db.exec(`ALTER TABLE quotes ADD COLUMN legal_mentions TEXT`);
+  }
+
+  if (!quoteColumnNames.has('payment_schedule')) {
+    db.exec(`ALTER TABLE quotes ADD COLUMN payment_schedule TEXT`);
+  }
 }
 
 function ensureSeedData() {

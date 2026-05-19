@@ -9,6 +9,8 @@ Application web Node.js pour créer et gérer des devis (MVP).
 - Création de devis avec lignes multiples (quantité, prix, TVA)
 - Calculs automatiques (remise, TVA multiple, acompte, reste à payer)
 - Statuts de devis (`draft`, `validated`, `sent`) + historique
+- Mentions légales en texte libre
+- Échéancier de paiement en texte libre
 - Génération PDF
 - Partage (simulation d’envoi email via changement de statut)
 

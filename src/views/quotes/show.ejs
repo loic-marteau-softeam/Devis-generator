@@ -40,6 +40,16 @@
     <li>Reste à payer: <%= totals.remainingAmount.toFixed(2) %> €</li>
   </ul>
 
+  <% if (quote.payment_schedule) { %>
+  <h2>Échéancier de paiement</h2>
+  <p><%= quote.payment_schedule %></p>
+  <% } %>
+
+  <% if (quote.legal_mentions) { %>
+  <h2>Mentions légales</h2>
+  <p><%= quote.legal_mentions %></p>
+  <% } %>
+
   <div class="actions">
     <a class="button" href="/quotes/<%= quote.id %>/pdf">Télécharger PDF</a>
     <form method="post" action="/quotes/<%= quote.id %>/share">

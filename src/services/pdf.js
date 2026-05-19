@@ -47,8 +47,15 @@ function createQuotePdf(quote, client, lines) {
     doc.fontSize(10).text(quote.notes);
   }
 
+  if (quote.payment_schedule) {
+    doc.moveDown();
+    doc.fontSize(12).text('Échéancier de paiement');
+    doc.fontSize(10).text(quote.payment_schedule);
+  }
+
   doc.moveDown();
-  doc.fontSize(9).text('Mentions légales: Ce devis est valable pour la période indiquée ci-dessus.', {
+  doc.fontSize(12).text('Mentions légales');
+  doc.fontSize(9).text(quote.legal_mentions || 'Ce devis est valable pour la période indiquée ci-dessus.', {
     align: 'left'
   });
 
